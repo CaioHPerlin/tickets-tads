@@ -1,0 +1,23 @@
+services:
+  api:
+    build: ./api
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: yarn dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - webdev_tickets:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123
+
+volumes:
+  webdev_tickets:

@@ -1,0 +1,51 @@
+<head>
+  <title>Tickets</title>
+  <link rel="stylesheet" href="http://localhost:3000/style.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>SuperTickets</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <% if (tickets.length === 0) { %>
+    <p>Nenhum ticket encontrado.</p>
+    <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Descrição</th>
+          <th>Data de Abertura</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tickets.forEach(ticket => { %>
+        <tr>
+          <td><%= ticket.id %></td>
+          <td>
+            <a href="/tickets/<%= ticket.id %>"><%= ticket.title %></a>
+          </td>
+          <td>
+            <%= ticket.description.substring(0, 50) %><%=
+            ticket.description.length > 50 ? '...' : '' %>
+          </td>
+          <td><%= new Date(ticket.openingDate).toLocaleDateString() %></td>
+          <td>
+            <span
+              class="status <%= ticket.resolved ? 'status-resolved' : 'status-pending' %>"
+            >
+              <%= ticket.resolved ? 'RESOLVIDO' : 'PENDENTE' %>
+            </span>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+  </main>
+</body>
