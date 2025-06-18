@@ -6,6 +6,7 @@ const app = express();
 const connection = require("./connection");
 const tables = require("./tables");
 const ticketsRoutes = require("./routes/tickets.routes");
+const usersRoutes = require("./routes/users.routes");
 const errors = require("./utils/errors");
 
 tables.init(connection);
@@ -21,6 +22,7 @@ app.set("view engine", "ejs");
 // Routes
 app.get("/ping", (_, res) => res.send("pong"));
 app.use("/tickets", ticketsRoutes);
+app.use("/users", usersRoutes);
 
 // Error handling middleware
 app.use(errors.handleErrors);

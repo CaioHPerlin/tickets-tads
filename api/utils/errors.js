@@ -12,6 +12,12 @@ class NotFoundError extends AppError {
   }
 }
 
+class UnauthorizedError extends AppError {
+  constructor(resource) {
+    super(`${resource} não encontrado(a)`, 401);
+  }
+}
+
 class BadRequestError extends AppError {
   constructor(message) {
     super(message || "Dados inválidos", 400);
@@ -21,11 +27,12 @@ class BadRequestError extends AppError {
 module.exports = {
   AppError,
   NotFoundError,
+  UnauthorizedError,
   BadRequestError,
   handleErrors: (err, _, res, __) => {
     console.error("[ERROR]", err);
     res
       .status(err.statusCode || 500)
-      .render("error", { message: err.message || "Erro interno." });
+      .json({ message: err.message || "Erro interno." });
   },
 };

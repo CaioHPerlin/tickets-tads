@@ -3,10 +3,19 @@ const { NotFoundError, BadRequestError } = require("../utils/errors");
 
 class Ticket {
   async findAll() {
-    const [results] = await connection.promise().query(
-      `SELECT id, title, description, openingDate, resolved 
-       FROM tickets ORDER BY openingDate DESC`
-    );
+    const [results] = await connection
+      .promise()
+      .query(`SELECT * FROM tickets ORDER BY openingDate DESC`);
+    return results;
+  }
+
+  async findAllByUser(userID) {
+    const [results] = await connection
+      .promise()
+      .query(
+        `SELECT * FROM tickets WHERE userID = ? ORDER BY openingDate DESC`,
+        [userID]
+      );
     return results;
   }
 
@@ -21,23 +30,24 @@ class Ticket {
     return results[0];
   }
 
-  async create({ title, description }) {
+  async create({ title, description, openingDate, userID }) {
     const [result] = await connection.promise().query(
-      `INSERT INTO tickets (title, description, openingDate, resolved) 
-         VALUES (?, ?, CURRENT_DATE, FALSE)`,
-      [title, description]
+      `INSERT INTO tickets (title, description, openingDate, resolved, userID) 
+         VALUES (?, ?, ?, FALSE, ?)`,
+      [title, description, openingDate, userID]
     );
     return this.findById(result.insertId);
   }
 
-  async update(id, { title, description, resolved }) {
+  async update(id, { title, description, resolved, openingDate, userID }) {
     await this.findById(id); // Verifica existência
 
     await connection.promise().query(
       `UPDATE tickets 
-         SET title = ?, description = ?, resolved = ?
+         SET title = ?, description = ?, resolved = ?,
+         openingDate = ?, userID = ?
          WHERE id = ?`,
-      [title, description, resolved, id]
+      [title, description, resolved, openingDate, userID, id]
     );
     return this.findById(id);
   }
