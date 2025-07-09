@@ -6,7 +6,7 @@ const jwtSecret = "devwebtoken";
 
 class UsersController {
   async login(req, res, next) {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     if (!email) {
       throw new BadRequestError("'email' é obrigatório.");
@@ -71,7 +71,7 @@ class UsersController {
       const newUser = await userModel.create({
         name,
         email,
-        password: bcrypt.hash(password, 8),
+        password: await bcrypt.hash(password, 8),
       });
       res.status(201).json(newUser);
     } catch (err) {

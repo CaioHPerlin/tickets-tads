@@ -30,11 +30,11 @@ class Ticket {
     return results[0];
   }
 
-  async create({ title, description, openingDate, userID }) {
+  async create({ title, description, openingDate, resolved, userID }) {
     const [result] = await connection.promise().query(
       `INSERT INTO tickets (title, description, openingDate, resolved, userID) 
-         VALUES (?, ?, ?, FALSE, ?)`,
-      [title, description, openingDate, userID]
+         VALUES (?, ?, ?, ?, ?)`,
+      [title, description, openingDate, resolved, userID]
     );
     return this.findById(result.insertId);
   }

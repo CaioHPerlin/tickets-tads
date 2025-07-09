@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperTickets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>SuperTickets</h1>
+
+    <form id="register-form">
+        <h2>Cadastro</h2>
+        <input type="text" id="rg-name" name="name" placeholder="Nome Completo"><br>
+        <input type="text" id="rg-email" name="email" autocomplete="email" placeholder="E-mail"><br>
+        <input type="password" id="rg-password" name="password" placeholder="Password"><br>
+        <button>Cadastrar</button>
+        <p id="register-message"></p>
+    </form>
+
+    <form id="login-form">
+        <h2>Login</h2>
+        <input type="text" id="email" name="email" autocomplete="email" placeholder="E-mail"><br>
+        <input type="password" id="password" name="password" placeholder="Password"><br>
+        <button>Login</button>
+        <p id="login-message"></p>
+    </form>
+
+    <main id="ticket-section">
+        <h2>Tickets</h2>
+        <ul id="ticket-list"></ul>
+
+        <form id="ticket-form">
+            <h3>Cadastrar Novo Ticket</h3>
+            <input type="text" name="title" id="title" placeholder="Título"/><br>
+            <textarea type="text" name="description" id="description" placeholder="Descrição"></textarea><br>
+            <input type="date" name="date" id="date"/><br>
+            <label for="resolved">Resolvido</label>
+            <input type="checkbox" name="resolved" id="resolved"/><br>
+            <button>Adicionar Ticket</button>
+            <p id="ticket-message"></p>
+        </form>
+
+        <button id="logout-btn">Logout</button>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

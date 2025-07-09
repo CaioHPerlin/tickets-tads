@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 
 const PORT = 3000;
 
@@ -12,6 +13,7 @@ const errors = require("./utils/errors");
 tables.init(connection);
 
 // Middleware
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

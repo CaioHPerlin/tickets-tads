@@ -31,10 +31,10 @@ class TicketsController {
   }
 
   async create(req, res, next) {
-    const { title, description } = req.body;
+    const { title, description, openingDate, resolved} = req.body;
 
-    if (!title || !description) {
-      throw new BadRequestError("'title' e 'description'  são obrigatórios.");
+    if (!title || !description|| !openingDate || !resolved) {
+      throw new BadRequestError("'title', 'description', 'openingDate' e 'userID'  são obrigatórios.");
     }
 
     try {
@@ -42,10 +42,11 @@ class TicketsController {
         .toISOString()
         .slice(0, 19)
         .replace("T", " "); // Format: YYYY-MM-DD HH:MM:SS
-      const newTicket = await ticketModel.create({
+      await ticketModel.create({
         title,
         description,
         openingDate,
+        resolved,
         userID: req.userID,
       });
       res.status(201).json({ message: "Ticket criado com sucesso." });
